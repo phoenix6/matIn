@@ -1,0 +1,139 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>org.matin.server</groupId>
+  <artifactId>matIN</artifactId>
+  <packaging>war</packaging>
+  <version>0.0.1-SNAPSHOT</version>
+  <name>matIn Maven Webapp</name>
+  <url>http://maven.apache.org</url>
+  
+  	<properties>
+		<spring.version>3.2.3.RELEASE</spring.version>
+		<jackson.version>1.9.13</jackson.version>
+		<jdk.version>1.6</jdk.version>
+		<gson.version>2.2.4</gson.version>
+	</properties>
+	
+  	<repositories>
+		<repository>
+			<id>Frames-Latest</id>
+			<url>https://oss.sonatype.org/content/repositories/snapshots/</url>
+			<snapshots>
+				<enabled>true</enabled>
+			</snapshots>
+		</repository>
+	</repositories>
+  
+    
+  	<dependencies>
+ 
+		<!-- Spring 3 dependencies -->
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-core</artifactId>
+			<version>${spring.version}</version>
+		</dependency>
+ 
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-web</artifactId>
+			<version>${spring.version}</version>
+		</dependency>
+ 
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-webmvc</artifactId>
+			<version>${spring.version}</version>
+		</dependency>
+ 
+		<!-- Jackson JSON Mapper -->
+		<dependency>
+			<groupId>org.codehaus.jackson</groupId>
+			<artifactId>jackson-mapper-asl</artifactId>
+			<version>${jackson.version}</version>
+		</dependency>
+
+	    <!-- Gson: Java to Json conversion -->
+	    <dependency>
+		    <groupId>com.google.code.gson</groupId>
+		    <artifactId>gson</artifactId>
+		    <version>${gson.version}</version>
+	    </dependency>
+	
+	    <!-- Blueprints dependencies -->
+	    <dependency>
+		    <groupId>com.tinkerpop</groupId>
+		    <artifactId>frames</artifactId>
+		    <version>2.4.0-SNAPSHOT</version>
+	    </dependency>
+  
+        <dependency>
+            <groupId>com.tinkerpop.blueprints</groupId>
+            <artifactId>blueprints-core</artifactId>
+            <version>2.3.0</version>
+        </dependency>
+        
+        <!-- OrientDB dependencies -->
+        <dependency>
+            <groupId>com.orientechnologies</groupId>
+            <artifactId>orientdb-core</artifactId>
+            <version>1.4.1</version>
+        </dependency>
+        
+        <dependency>
+            <groupId>com.orientechnologies</groupId>
+            <artifactId>orient-commons</artifactId>
+            <version>1.4.1</version>
+        </dependency>
+        
+        <dependency>
+           <groupId>com.tinkerpop.blueprints</groupId>
+           <artifactId>blueprints-orient-graph</artifactId>
+           <version>2.3.0</version>
+        </dependency>
+
+	   <dependency>
+		   <groupId>com.orientechnologies</groupId>
+		   <artifactId>orientdb-client</artifactId>
+		   <version>1.4.0</version>
+	   </dependency>
+	    
+	    
+ 
+	</dependencies>
+ 
+	<build>
+		<finalName>matIN</finalName>
+		<plugins>
+		  <plugin>
+			<groupId>org.apache.maven.plugins</groupId>
+			<artifactId>maven-eclipse-plugin</artifactId>
+			<version>2.9</version>
+			<configuration>
+				<downloadSources>true</downloadSources>
+				<downloadJavadocs>false</downloadJavadocs>
+				<wtpversion>2.0</wtpversion>
+			</configuration>
+		  </plugin>
+		  <plugin>
+			<groupId>org.apache.maven.plugins</groupId>
+			<artifactId>maven-compiler-plugin</artifactId>
+			<version>2.3.2</version>
+			<configuration>
+				<source>${jdk.version}</source>
+				<target>${jdk.version}</target>
+			</configuration>
+		  </plugin>
+		  
+			<plugin>
+				<groupId>org.apache.tomcat.maven</groupId>
+				<artifactId>tomcat7-maven-plugin</artifactId>
+				<version>2.1</version>
+			</plugin>
+			
+		</plugins>
+	</build>
+  	
+  	
+</project>
