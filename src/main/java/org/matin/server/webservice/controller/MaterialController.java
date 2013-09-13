@@ -2,7 +2,7 @@ package org.matin.server.webservice.controller;
 
 import org.matin.server.database.connection.Connection;
 import org.matin.server.database.domain.MaterialDB;
-import org.matin.server.webservice.model.Material;
+import org.matin.client.Material;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
