@@ -4,20 +4,28 @@ import java.text.DateFormat;
 import java.util.Date;
 import java.util.Vector;
 
-import org.matin.server.database.domain.CanonicalFeature;
-import org.matin.server.database.domain.DataObject;
-import org.matin.server.database.domain.DataProcess;
-import org.matin.server.database.domain.DataProcessRun;
-import org.matin.server.database.domain.GriddedSpace;
+import org.matin.server.database.domain.CanonicalFeatureDB;
+import org.matin.server.database.domain.DataObjectDB;
+import org.matin.server.database.domain.DataProcessDB;
+import org.matin.server.database.domain.DataProcessRunDB;
+import org.matin.server.database.domain.GriddedSpaceDB;
 import org.matin.server.database.domain.MaterialDB;
 import org.matin.server.database.domain.MaterialCategory;
 import org.matin.server.database.domain.SampleDB;
+import org.matin.server.webservice.controller.GraphDBConnectionService;
 
 import com.tinkerpop.blueprints.Graph;
 import com.tinkerpop.blueprints.Vertex;
-import com.tinkerpop.blueprints.impls.orient.OrientGraph;
 import com.tinkerpop.frames.FramedGraph;
 import com.tinkerpop.frames.FramedGraphFactory;
+
+/*
+import com.orientechnologies.orient.core.command.script.OCommandScript;
+import com.orientechnologies.orient.core.metadata.schema.OClass;
+import com.orientechnologies.orient.core.sql.OCommandSQL;
+import com.tinkerpop.blueprints.impls.orient.OrientBaseGraph;
+import com.tinkerpop.blueprints.impls.orient.OrientGraph;
+*/
 
 /**
  * Hello world!
@@ -25,38 +33,33 @@ import com.tinkerpop.frames.FramedGraphFactory;
  */
 public class App 
 {
-	private static final String DB_PATH = "remote:localhost/mathub";
-//	private static final String DB_PATH = "local:databases/mathub";
-	private final String username = "admin";
-	private final String password = "admin";
 	
 	private FramedGraph<Graph> manager;
 	private Graph graph;
+	private GraphDBConnectionService conn;
 	
 	public void connectDatabase(){
-		
-		graph = new OrientGraph(DB_PATH, username, password);
-		FramedGraphFactory f = new FramedGraphFactory();
-		manager = f.create(graph);
+		conn = new GraphDBConnectionService();
+		manager = conn.getGraphManager();
+		graph = conn.getGraph();
 	}
 	
-	public void createDatabase(){
-
-
-		//create material
-		MaterialDB material = manager.addVertex(null, MaterialDB.class);
-		material.setName("Iron");
-		material.setDescription("Decription of Iron from wiki");
-		Vector<String> v = new Vector<String>();
-		v.addElement("wiki.org");
-		material.setReferenceURLs(v);
-		material.setChemicalFormula("Fe");
+	public void createDatabase()
+	{
+		System.out.println("Creating Database ... ");
 		
-		System.out.println(material.getDescription());
-	
+        MaterialDB materialDB = manager.addVertex(null, MaterialDB.class);
+        materialDB.setName("Iron");
+        materialDB.setDescription("Iron is a metal.");
+
+        for( Vertex v : graph.getVertices("name", "Iron") ) {
+        	  System.out.println("Found vertex: " + v );
+        }
+       	
 		graph.shutdown();
-		manager.shutdown();
+		manager.shutdown();	
 		
+		System.out.println("Done.");
 	}
 	
 
@@ -66,6 +69,5 @@ public class App
 		App app = new App();
 		app.connectDatabase();
 		app.createDatabase();
-
     }
 }

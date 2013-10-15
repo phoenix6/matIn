@@ -1,6 +1,8 @@
 package org.matin.client;
 
 import java.util.ArrayList;
+import java.util.EnumMap;
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -11,17 +13,12 @@ import java.util.List;
  */
 public class Material extends MatINWriteableObject {
 
-	protected String name;
-
-	protected String description;
-
-	public Material() {}
-	
-	public Material(String name, String description) {
-		this.name = name;
-		this.description = description;
+	public Material() 
+	{
+		name = "";
+		description = "";
 	}
-
+	
 	/**
 	 * @return the name
 	 */
@@ -30,7 +27,7 @@ public class Material extends MatINWriteableObject {
 	}
 
 	/**
-	 * @param name the name to set
+	 * @param name set the unique name
 	 */
 	public void setName(String name) {
 		this.name = name;
@@ -50,9 +47,29 @@ public class Material extends MatINWriteableObject {
 		this.description = description;
 	}
 
-	protected List<String> imageURLs = new ArrayList<String>();
+	public void addComponentElement(Element element, Double percentage)
+	{
+		componentElementsUpperBound.put(element, percentage);
+		componentElementsLowerBound.put(element, percentage);
+	}
+	
+	public void addComponentElement(Element element, Double percentageLowerBound, Double percentageUpperBound)
+	{
+		componentElementsUpperBound.put(element, percentageLowerBound);
+		componentElementsLowerBound.put(element, percentageUpperBound);
+	}
+	
+	public List<String> getKeywords() { return keywords; }
+	public List<String> getReferenceURLs() { return referenceURLs; }
+	
+	protected String name;
+	protected String description;
 
 	protected List<String> referenceURLs = new ArrayList<String>();
 
-
+	protected EnumMap<Element, Double> componentElementsUpperBound = new EnumMap<Element, Double>(Element.class);
+	protected EnumMap<Element, Double> componentElementsLowerBound = new EnumMap<Element, Double>(Element.class);
+	
+	protected List<String> keywords = new ArrayList<String>();
+	
 }

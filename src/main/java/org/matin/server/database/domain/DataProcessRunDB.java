@@ -7,7 +7,7 @@ import com.tinkerpop.frames.Adjacency;
 import com.tinkerpop.frames.Property;
 import com.tinkerpop.frames.VertexFrame;
 
-public interface DataProcessRun extends VertexFrame{
+public interface DataProcessRunDB extends VertexFrame{
 
 	@Property("dataProcessRunID")
 	public void setDataProcessRunID(int id);
@@ -25,12 +25,12 @@ public interface DataProcessRun extends VertexFrame{
 	public Date getDate();
 	
 	@Adjacency(label="instanceOf", direction = Direction.OUT)
-	public void setInstance(DataProcess dp);
+	public void setInstance(DataProcessDB dp);
 	@Adjacency(label="instanceOf", direction = Direction.OUT)
-	public DataProcess getInstance();
+	public DataProcessDB getInstance();
 	
 	@Adjacency(label="argumentOut", direction = Direction.OUT)
-	public void setDataObject(DataObject o);
+	public void setDataObject(DataObjectDB o);
 	@Adjacency(label="argumentOut", direction = Direction.OUT)
-	public Iterable<DataObject> getDataObjects();
+	public Iterable<DataObjectDB> getDataObjects();
 }

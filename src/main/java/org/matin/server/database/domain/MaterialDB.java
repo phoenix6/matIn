@@ -23,15 +23,16 @@ public interface MaterialDB extends VertexFrame{
 	@Property("referenceURLs")
 	public Iterable<String> getRefenceURLs();
 	
-	@Property("ChemicalFormula")
+	@Property("chemicalFormula")
 	public void setChemicalFormula(String s);
-	@Property("ChemicalFormula")
+	@Property("chemicalFormula")
 	public String getChemicalFormula();
 	
+	/*
 	@Adjacency(label="isA", direction=Direction.OUT)
 	public void setMaterialFamily(MaterialCategory mf);
 	@Adjacency(label="isA", direction=Direction.OUT)
 	public MaterialCategory getMaterialFamily();
-	
+	*/
 	
 }

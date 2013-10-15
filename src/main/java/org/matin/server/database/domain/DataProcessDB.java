@@ -5,7 +5,7 @@ import java.util.Date;
 import com.tinkerpop.frames.Property;
 import com.tinkerpop.frames.VertexFrame;
 
-public interface DataProcess extends VertexFrame{
+public interface DataProcessDB extends VertexFrame{
 	
 	@Property("dataProcessID")
 	public void setDataProcessID(int id);

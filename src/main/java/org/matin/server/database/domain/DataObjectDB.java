@@ -7,7 +7,7 @@ import com.tinkerpop.frames.Adjacency;
 import com.tinkerpop.frames.Property;
 import com.tinkerpop.frames.VertexFrame;
 
-public interface DataObject extends VertexFrame{
+public interface DataObjectDB extends VertexFrame{
 	
 	@Property("objectID")
 	public void setObjectID(int id);
@@ -50,21 +50,21 @@ public interface DataObject extends VertexFrame{
 	public boolean getIsSimulated();
 	
 	@Adjacency(label="contains", direction = Direction.OUT)
-	public void setCanonicalFeature(CanonicalFeature cf);
+	public void setCanonicalFeature(CanonicalFeatureDB cf);
 	
 	@Adjacency(label="spans", direction = Direction.OUT)
-	public void setSpace(Space s);
+	public void setSpace(SpaceDB s);
 	
 	@Adjacency(label="argumentInto", direction = Direction.OUT)
-	public void setDataProcessRunIn(DataProcessRun dpr);
+	public void setDataProcessRunIn(DataProcessRunDB dpr);
 	@Adjacency(label="argumentInto", direction = Direction.OUT)
-	public Iterable<DataProcessRun> getDataProcessRuns();
+	public Iterable<DataProcessRunDB> getDataProcessRuns();
 	
 	@Adjacency(label="hasA", direction = Direction.IN)
 	public SampleDB getSample();
 	
 	@Adjacency(label="argumentOut", direction = Direction.IN)
-	public Iterable<DataProcessRun> getDataProcessRun();
+	public Iterable<DataProcessRunDB> getDataProcessRun();
 	
 
 }

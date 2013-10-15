@@ -27,6 +27,37 @@ public class MatIN {
 	}
 
 	/**
+	 * Get the URL of the database.
+	 * 
+	 * @return The URL for the MatIN database server.
+	 */
+	public String getDatabaseURL()
+	{
+		return databaseURL;
+	}
+	
+	/**
+	 * Get the user id number of the currently logged in user.
+	 * 
+	 * @return The user id number.
+	 */
+	public int getUserID()
+	{
+		return uid;
+	}
+	
+	/**
+	 * Get the session key for this database connection session
+	 * 
+	 * @return The session key string.
+	 */
+	public String getSessionKey()
+	{
+		return sessionKey;
+	}
+	
+	
+	/**
 	 * Search for a material in the database by case-sensitive name. 
 	 * 
 	 * @param name The name of the material to search.
@@ -51,7 +82,7 @@ public class MatIN {
 		throws MatINMaterialNotFoundException
 	{
 		// TODO: Query the database for a material with the name
-		Material m = new Material("Testing", "This is a test material.");
+		Material m = new Material();
 
 		return m;
 	}

@@ -3,11 +3,12 @@ package org.matin.server.database.domain;
 import java.util.Vector;
 
 import com.tinkerpop.frames.Property;
+import com.tinkerpop.frames.VertexFrame;
 import com.tinkerpop.frames.modules.typedgraph.TypeValue;
 
-@TypeValue("NonGriddedSpace")
-public interface NonGriddedSpace extends Space{
-	
+@TypeValue("GriddedSpaceDB")
+public interface GriddedSpaceDB extends SpaceDB, VertexFrame{
+
 	@Property("dimensions")
 	public void setDimensions(Vector<Integer> v);
 	@Property("dimensions")
@@ -18,14 +19,14 @@ public interface NonGriddedSpace extends Space{
 	@Property("origin")
 	public Vector<Double> getOrigin();
 	
+	@Property("stepSizes")
+	public void setStepSizes(Vector<Double> v);
+	@Property("stepSizes")
+	public Vector<Double> getStepSizes();
+	
 	@Property("units")
 	public void setUnits(String units);
 	@Property("units")
 	public String getUnits();
 	
-	@Property("datasetName")
-	public void setDatasetName(String datasetname);
-	@Property("datasetName")
-	public String getDataSetName();
-
 }

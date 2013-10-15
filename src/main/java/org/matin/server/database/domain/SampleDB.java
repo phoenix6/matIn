@@ -46,8 +46,8 @@ public interface SampleDB extends VertexFrame{
 	public MaterialDB getMaterial();
 	
 	@Adjacency(label="hasA", direction=Direction.OUT)
-	public void setDataObject(DataObject dataObject);
+	public void setDataObject(DataObjectDB dataObject);
 	@Adjacency(label="hasA", direction=Direction.OUT)
-	public DataObject getDataObject();
+	public DataObjectDB getDataObject();
 	
 }
