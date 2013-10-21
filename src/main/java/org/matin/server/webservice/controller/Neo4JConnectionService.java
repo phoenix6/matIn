@@ -146,16 +146,17 @@ public class Neo4JConnectionService implements GraphDBConnectionService {
     	// Create the vertex in the database
 		ClassTypeDB objDB = getFramedGraph().addVertex(null, clazz);
 		Vertex v = ((VertexFrame)objDB).asVertex();
-
-		// Set the modify date
-		v.setProperty("modifyDate", dateFormat.format(new Date()));
-		
-		v.setProperty("url", source.getClass().getSimpleName().toLowerCase() + "s/" + v.getId());
-		
+	
 		// Use ModelMapper to automatically map the equivalent data from the request object to the
 		// database side object. This persists the values to the database.
 		ModelMapper mapper = new ModelMapper();
 		mapper.map(source, objDB);
+
+		// Set the modify date
+		v.setProperty("modifyDate", dateFormat.format(new Date()));
+		
+		// Set the resource URL
+		v.setProperty("url", source.getClass().getSimpleName().toLowerCase() + "s/" + v.getId());
 		
 		return objDB;
     }
@@ -165,15 +166,15 @@ public class Neo4JConnectionService implements GraphDBConnectionService {
     	// Create the vertex in the database
 		ClassTypeDB objDB = getFramedGraph().getVertex(id, clazz);
 		Vertex v = ((VertexFrame)objDB).asVertex();
-
-		// Set the modify date
-		v.setProperty("modifyDate", dateFormat.format(new Date()));
-			
+		
 		// Use ModelMapper to automatically map the equivalent data from the request object to the
 		// database side object. This persists the values to the database.
 		ModelMapper mapper = new ModelMapper();
 		mapper.map(source, objDB);
 	
+		// Set the modify date
+		v.setProperty("modifyDate", dateFormat.format(new Date()));
+				
 		return objDB;
 	}
 

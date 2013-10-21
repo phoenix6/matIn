@@ -42,5 +42,6 @@ public interface CanonicalFeatureDB extends VertexFrame{
 	public void setDataSetName(String name);
 	@Property("datasetName")
 	public String getDataSetName();
-	
+
+	public void Test();
 }

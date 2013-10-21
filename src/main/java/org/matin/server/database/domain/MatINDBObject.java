@@ -29,5 +29,11 @@ public interface MatINDBObject extends VertexFrame {
 	public void setURL(String url);
 	@Property("url")
 	public String getURL();
+
+	@Property("owner")
+	public void setOwner(String owner);
+	@Property("owner")
+	public String getOwner();
+
 	
 }

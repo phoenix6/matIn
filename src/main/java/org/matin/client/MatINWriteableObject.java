@@ -51,6 +51,12 @@ public class MatINWriteableObject {
 	Date lastModifiedDate;	
 	
 	/**
+	 * The owner of this object, who commited it to the database.
+	 */
+	@JsonProperty
+	String owner;
+	
+	/**
 	 * This method commits the MatINWritableObject to a remote database.
 	 *  
 	 * @param dbObject The database to commit this object to.
@@ -64,7 +70,7 @@ public class MatINWriteableObject {
 		try {
 			
 			FilterProvider filters = new SimpleFilterProvider().addFilter("myFilter",
-					SimpleBeanPropertyFilter.serializeAllExcept("url", "creationDate", "lastModifiedDate"));
+					SimpleBeanPropertyFilter.serializeAllExcept("url", "creationDate", "lastModifiedDate", "owner"));
 			
 			// Turn the object into JSON
 			String jsonString = mapper.writer(filters).writeValueAsString(this);
@@ -76,7 +82,7 @@ public class MatINWriteableObject {
 			
 			// If the url is empty then we are creating this object for the first time.
 			if(url == null)
-			{
+			{	
 				// The general practice will for puts will be to take the class name and lowercase it, then make it plural
 				String requestURL = dbObject.getDatabaseURL() + "/matIN/rest/" + this.getClass().getSimpleName().toLowerCase() + "s";
 			

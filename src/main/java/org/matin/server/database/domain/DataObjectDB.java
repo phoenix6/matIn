@@ -1,6 +1,7 @@
 package org.matin.server.database.domain;
 
 import java.util.Date;
+import java.util.List;
 
 import com.tinkerpop.blueprints.Direction;
 import com.tinkerpop.frames.Adjacency;
@@ -9,35 +10,30 @@ import com.tinkerpop.frames.VertexFrame;
 
 public interface DataObjectDB extends VertexFrame{
 	
-	@Property("objectID")
-	public void setObjectID(int id);
-	@Property("objectID")
-	public int getObjectID();
-	
 	@Property("name")
 	public void setName(String name);
 	@Property("name")
 	public String getName();
 	
-	@Property("OwnerUID")
-	public void setOwnerUID(int id);
-	@Property("OwnerUID")
-	public int getOwnerUID();
+	@Property("description")
+	public void setDescription(String description);
+	@Property("description")
+	public String getDescription();
 	
-	@Property("dateCreated")
-	public void setDateCreated(Date d);
-	@Property("dateCreated")
-	public Date getDateCreated();
-
-	@Property("dateModified")
-	public void setDateModified(Date d);
-	@Property("dateModified")
-	public Date getDateModified();
 	
-	@Property("permission")
-	public void setPermission(String permission);
-	@Property("permission")
-	public String getPermission();
+	/*
+	 * Groups, and permissions
+	 */
+	@Property("groups")
+	public void setGroups(List<String> groups);
+	@Property("groups")
+	public List<String> getGroups();
+	
+	@Property("groupWritePermissions")
+	public void getGroupWritePermissions();
+	@Property("groupWritePermissions")
+	public boolean setGroupWritePermissions(boolean val);
+	
 	
 	@Property("dataFileURL")
 	public void setProfileImgURL(String url);
