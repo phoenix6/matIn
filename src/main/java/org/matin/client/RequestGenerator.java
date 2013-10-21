@@ -1,6 +1,5 @@
 package org.matin.client;
 
-import org.matin.server.webservice.model.Material;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
