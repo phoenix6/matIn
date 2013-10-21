@@ -18,7 +18,7 @@ public class MatIN {
 	private final String databaseURL;
 	private final int uid;
 	private final String sessionKey;
-
+	
 	public MatIN(String databaseURL, int uid, String sessionKey)
 	{
 		this.databaseURL = databaseURL;
@@ -56,65 +56,35 @@ public class MatIN {
 		return sessionKey;
 	}
 	
+	/**
+	 * Search for any material in the database whose name matches exactly.
+	 * Case insensitive.
+	 *  
+	 * @param name The name of the material to search.
+	 * @return The first matching material found.
+	 */
+	public Material GetMaterial(String name)
+			throws MatINResourceNotFoundException
+	{
+		// TODO: Query the database for any materials that partially matches 
+		// the name passed in as a parameter.
+		return new Material();
+	}
 	
+		
 	/**
-	 * Search for a material in the database by case-sensitive name. 
+	 * Search for any material in the database whose name, keywords, or description partially
+	 * match the queryString.
 	 * 
-	 * @param name The name of the material to search.
-	 * @return The material found in the database.
-	 * @throws MatINMaterialNotFoundException
-	 */
-	public Material FindMaterial(String name)
-		throws MatINMaterialNotFoundException
-	{
-		return FindMaterial(name, true);
-	}
-
-	/**
-	 * Search for a material in the database by name. 
-	 * 
-	 * @param name The name of the material to search.
-	 * @param isCaseSensitive Whether the search is case sensitive.
-	 * @throws MatINMaterialNotFoundException
-	 * @return The material found in the database.
-	 */
-	public Material FindMaterial(String name, boolean isCaseSensitive)
-		throws MatINMaterialNotFoundException
-	{
-		// TODO: Query the database for a material with the name
-		Material m = new Material();
-
-		return m;
-	}
-
-	/**
-	 * Search for any material in the database whose name partially
-	 * matches the case-sensitive name
-	 * 
-	 * @param name The name of the material to search.
+	 * @param name The query string to search on.
 	 * @return A list of matching materials.
 	 */
-	public List<Material> FindMaterials(String name)
-			throws MatINMaterialNotFoundException
-	{
-		return FindMaterials(name, true);
-	}
-
-
-	/**
-	 * Search for any material in the database whose name partially
-	 * matches the name
-	 * 
-	 * @param name The name of the material to search.
-	 * @param isCaseSensitive Whether the search is case sensitive.
-	 * @return A list of matching materials.
-	 */
-	public List<Material> FindMaterials(String name, boolean isCaseSensitive)
-			throws MatINMaterialNotFoundException
+	public List<Material> FindMaterials(String queryString)
+			throws MatINResourceNotFoundException
 	{
 		// TODO: Query the database for any materials that partially matches 
 		// the name passed in as a parameter.
 		return new ArrayList<Material>();
 	}
-
+		
 }

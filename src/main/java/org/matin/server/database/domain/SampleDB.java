@@ -20,9 +20,9 @@ public interface SampleDB extends VertexFrame{
 	@Property("description")
 	public String getDescription();
 	
-	@Property("OwnerUID")
+	@Property("owner")
 	public void setOwnerUID(int id);
-	@Property("OwnerUID")
+	@Property("ownder")
 	public int getOwnerUID();
 	
 	@Property("profileImgURL")

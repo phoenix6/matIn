@@ -27,8 +27,8 @@
 	<!-- Http Json MessageConverter -->
 	<bean id="jsonConverter"
 		class="org.springframework.http.converter.json.MappingJacksonHttpMessageConverter">
-		<property name="supportedMediaTypes" value="application/json">
-		</property>
+		<property name="supportedMediaTypes" value="application/json"></property>
+		<property name="prettyPrint" value="true" />
 	</bean>  
 	
 	<mvc:annotation-driven />

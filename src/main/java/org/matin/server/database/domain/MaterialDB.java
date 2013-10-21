@@ -1,12 +1,14 @@
 package org.matin.server.database.domain;
 
+import java.util.List;
+
 import com.tinkerpop.blueprints.Direction;
 import com.tinkerpop.frames.Adjacency;
 import com.tinkerpop.frames.Property;
 import com.tinkerpop.frames.VertexFrame;
 import com.tinkerpop.frames.annotations.gremlin.GremlinGroovy;
 
-public interface MaterialDB extends VertexFrame{
+public interface MaterialDB extends MatINDBObject {
  
 	@Property("name")
 	public void setName(String name);
@@ -19,14 +21,29 @@ public interface MaterialDB extends VertexFrame{
 	public String getDescription();
 	
 	@Property("referenceURLs")
-	public void setReferenceURLs(Iterable<String> urls);
+	public void setReferenceURLs(List<String> urls);
 	@Property("referenceURLs")
-	public Iterable<String> getRefenceURLs();
+	public List<String> getReferenceURLs();
 	
-	@Property("chemicalFormula")
-	public void setChemicalFormula(String s);
-	@Property("chemicalFormula")
-	public String getChemicalFormula();
+	@Property("keywords")
+	public void setKeywords(List<String> keywords);
+	@Property("keywords")
+	public List<String> getKeywords();
+	
+	@Property("componentElements")
+	public void setComponentElements(List<String> elements);
+	@Property("componentElements")
+	public List<String> getComponentElements();
+	
+	@Property("componentElementUpperBounds")
+	public void setComponentElementUpperBounds(List<Double> bounds);
+	@Property("componentElementUpperBounds")
+	public List<Double> getComponentElementUpperBounds();
+	
+	@Property("componentElementLowerBounds")
+	public void setComponentElementLowerBounds(List<Double> bounds);
+	@Property("componentElementLowerBounds")
+	public List<Double> getComponentElementLowerBounds();
 	
 	/*
 	@Adjacency(label="isA", direction=Direction.OUT)

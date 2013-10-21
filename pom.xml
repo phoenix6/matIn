@@ -35,6 +35,18 @@
     
   	<dependencies>
  
+ 		<dependency>
+    		<groupId>com.google.guava</groupId>
+    		<artifactId>guava</artifactId>
+    		<version>12.0</version>
+		</dependency>
+		
+		<dependency>
+			<groupId>org.modelmapper</groupId>
+			<artifactId>modelmapper</artifactId>
+			<version>0.6.1</version>
+		</dependency>
+ 
 		<!-- Spring 3 dependencies -->
 		<dependency>
 			<groupId>org.springframework</groupId>
@@ -93,18 +105,19 @@
    			<artifactId>blueprints-neo4j-graph</artifactId>
    			<version>${tinkerpop.version}</version>
 		</dependency>
-		<dependency>
-		  	<groupId>org.neo4j.app</groupId>
-		  	<artifactId>neo4j-server</artifactId>
-		  	<version>${neo4j.version}</version>
-		</dependency>
-		<dependency>
-		 	<groupId>org.neo4j.app</groupId>
-		 	<artifactId>neo4j-server</artifactId>
-		 	<version>${neo4j.version}</version>
-		 	<classifier>static-web</classifier>
-		</dependency>
-        
+	     <dependency>
+            <groupId>org.neo4j.app</groupId>
+            <artifactId>neo4j-server</artifactId>
+            <version>${neo4j.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.neo4j.app</groupId>
+            <artifactId>neo4j-server</artifactId>
+            <version>${neo4j.version}</version>
+            <classifier>static-web</classifier>
+            <scope>provided</scope>
+        </dependency>
+             
         <!-- OrientDB dependencies 
         <dependency>
             <groupId>com.orientechnologies</groupId>
@@ -163,26 +176,56 @@
 	<build>
 		<finalName>matIN</finalName>
 		<plugins>
-		  <plugin>
-			<groupId>org.apache.maven.plugins</groupId>
-			<artifactId>maven-eclipse-plugin</artifactId>
-			<version>2.9</version>
-			<configuration>
-				<downloadSources>true</downloadSources>
-				<downloadJavadocs>false</downloadJavadocs>
-				<wtpversion>2.0</wtpversion>
-			</configuration>
-		  </plugin>
-		  <plugin>
-			<groupId>org.apache.maven.plugins</groupId>
-			<artifactId>maven-compiler-plugin</artifactId>
-			<version>2.3.2</version>
-			<configuration>
-				<source>${jdk.version}</source>
-				<target>${jdk.version}</target>
-			</configuration>
-		  </plugin>
-		  
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-eclipse-plugin</artifactId>
+				<version>2.9</version>
+				<configuration>
+					<downloadSources>true</downloadSources>
+					<downloadJavadocs>false</downloadJavadocs>
+					<wtpversion>2.0</wtpversion>
+				</configuration>
+			</plugin>
+			
+			<!--
+               For some reason tomcat doesn't like it when the neo4j-server static-web jar is included in the WAR file
+               It throws exceptions like:
+                   SEVERE: /webadmin/css/style.css
+                       java.lang.IllegalStateException: zip file closed
+
+               If we instead extract the contents into the WAR, it is much happier.
+			 -->
+			<plugin>
+			     <groupId>org.apache.maven.plugins</groupId>
+			     <artifactId>maven-dependency-plugin</artifactId>
+			     <version>2.4</version>
+			     <executions>
+			         <execution>
+			             <goals>
+			                 <goal>unpack-dependencies</goal>
+			             </goals>
+			             <phase>process-resources</phase>
+			         </execution>
+			     </executions>
+			     <configuration>
+			         <includeGroupIds>org.neo4j.app</includeGroupIds>
+			         <includeArtifactIds>neo4j-server</includeArtifactIds>
+			         <includeClassifiers>static-web</includeClassifiers>
+			         <includes>webadmin-html/**</includes>
+			         <outputDirectory>target/classes</outputDirectory>
+			     </configuration>
+			</plugin>
+
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>2.3.2</version>
+				<configuration>
+					<source>${jdk.version}</source>
+					<target>${jdk.version}</target>
+				</configuration>
+			</plugin>
+ 
 			<plugin>
 				<groupId>org.apache.tomcat.maven</groupId>
 				<artifactId>tomcat7-maven-plugin</artifactId>
@@ -190,6 +233,46 @@
 			</plugin>
 			
 		</plugins>
+
+		<pluginManagement>
+			<plugins>
+				<!--This plugin's configuration is used to store Eclipse m2e settings only. It has no influence on the Maven build itself.-->
+				<plugin>
+					<groupId>org.eclipse.m2e</groupId>
+					<artifactId>lifecycle-mapping</artifactId>
+					<version>1.0.0</version>
+					<configuration>
+						<lifecycleMappingMetadata>
+							<pluginExecutions>
+								<pluginExecution>
+									<pluginExecutionFilter>
+										<groupId>
+											org.apache.maven.plugins
+										</groupId>
+										<artifactId>
+											maven-dependency-plugin
+										</artifactId>
+										<versionRange>
+											[2.4,)
+										</versionRange>
+										<goals>
+											<goal>
+												unpack-dependencies
+											</goal>
+										</goals>
+									</pluginExecutionFilter>
+									<action>
+										<execute>
+											<runOnIncremental>true</runOnIncremental>
+										</execute>
+									</action>
+								</pluginExecution>
+							</pluginExecutions>
+						</lifecycleMappingMetadata>
+					</configuration>
+				</plugin>
+			</plugins>
+		</pluginManagement>
 	</build>
   	
   	

@@ -10,14 +10,16 @@ import org.matin.server.database.domain.DataProcessDB;
 import org.matin.server.database.domain.DataProcessRunDB;
 import org.matin.server.database.domain.GriddedSpaceDB;
 import org.matin.server.database.domain.MaterialDB;
-import org.matin.server.database.domain.MaterialCategory;
 import org.matin.server.database.domain.SampleDB;
 import org.matin.server.webservice.controller.GraphDBConnectionService;
+import org.matin.server.webservice.controller.Neo4JConnectionService;
 
 import com.tinkerpop.blueprints.Graph;
+import com.tinkerpop.blueprints.TransactionalGraph;
 import com.tinkerpop.blueprints.Vertex;
 import com.tinkerpop.frames.FramedGraph;
 import com.tinkerpop.frames.FramedGraphFactory;
+import com.tinkerpop.frames.FramedTransactionalGraph;
 
 /*
 import com.orientechnologies.orient.core.command.script.OCommandScript;
@@ -34,13 +36,14 @@ import com.tinkerpop.blueprints.impls.orient.OrientGraph;
 public class App 
 {
 	
-	private FramedGraph<Graph> manager;
-	private Graph graph;
+	private FramedTransactionalGraph<TransactionalGraph> manager;
+	private TransactionalGraph graph;
 	private GraphDBConnectionService conn;
 	
 	public void connectDatabase(){
-		conn = new GraphDBConnectionService();
-		manager = conn.getGraphManager();
+		conn = new Neo4JConnectionService();
+		
+		manager = conn.getFramedGraph();
 		graph = conn.getGraph();
 	}
 	

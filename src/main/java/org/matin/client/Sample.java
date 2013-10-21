@@ -24,23 +24,18 @@ import javax.imageio.ImageIO;
  */
 public class Sample extends MatINWriteableObject {
 
-	protected String name;
-
-	protected String description; 
-
-	protected Material material;
-
-	protected List<String> imageURLs = new ArrayList<String>();
-
+	public Sample() { }
+	
 	/**
-	 * @param name
-	 * @param description
-	 * @param material
+	 *  Create a Sample object with the bare minimum of required information. Please 
+	 *  add more with the appropriate setter methods.
+	 * 
+	 * @param name A name for this sample.
+	 * @param material The material of the sample.
 	 */
-	public Sample(String name, String description, Material material) {
+	public Sample(String name, Material material) {
 		super();
 		this.name = name;
-		this.description = description;
 		this.material = material;
 	}
 
@@ -81,7 +76,16 @@ public class Sample extends MatINWriteableObject {
 	}
 
 	/**
-	 * Get the material objec that this sample is made of.
+	 * Get the owner of the sample object. This is whoever created it.
+	 * 
+	 * @return the owner's user name
+	 */
+	public String getOwner() {
+		return owner;
+	}
+
+	/**
+	 * Get the material object that this sample is made of.
 	 * 
 	 * @return the material
 	 */
@@ -124,12 +128,59 @@ public class Sample extends MatINWriteableObject {
 	}
 
 	/**
-	 * Clear all of the images from the list.
+	 * @return the imageURLs
 	 */
-	public void cleanSampleImageFiles()
-	{
-		imageURLs.clear();
+	public List<String> getImageURLs() {
+		return imageURLs;
 	}
 
+	/**
+	 * @param imageURLs the imageURLs to set
+	 */
+	public void setImageURLs(List<String> imageURLs) {
+		this.imageURLs = imageURLs;
+	}
 
+	/**
+	 * @param keywords the keywords to set
+	 */
+	public void setKeywords(List<String> keywords) {
+		this.keywords = keywords;
+	}
+
+	/**
+	 * @param referenceURLs the referenceURLs to set
+	 */
+	public void setReferenceURLs(List<String> referenceURLs) {
+		this.referenceURLs = referenceURLs;
+	}
+
+	/**
+	 * Get the search keywords for this material.
+	 * 
+	 * @return The search keywords for this material.
+	 */
+	public List<String> getKeywords() { return keywords; }
+	
+	/**
+	 * Get the reference URLs for this material.
+	 * 
+	 * @return The reference URLs for this material.
+	 */
+	public List<String> getReferenceURLs() { return referenceURLs; }
+
+	protected String name;
+
+	protected String description; 
+
+	protected String owner;
+	
+	protected Material material;
+
+	protected List<String> imageURLs = new ArrayList<String>();
+
+	protected List<String> keywords = new ArrayList<String>();
+	
+	protected List<String> referenceURLs = new ArrayList<String>();
+	
 }
