@@ -7,7 +7,9 @@ import com.tinkerpop.blueprints.Vertex;
 import com.tinkerpop.frames.FramedTransactionalGraph;
 
 public interface GraphDBConnectionService {
-	  
+	
+	public String getDBDirectory();
+	
     public TransactionalGraph getGraph();
     
 	public FramedTransactionalGraph<TransactionalGraph> getFramedGraph();

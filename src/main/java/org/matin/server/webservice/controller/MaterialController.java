@@ -29,7 +29,7 @@ import com.tinkerpop.blueprints.Vertex;
 public class MaterialController extends MatINController {
 
 	// The name of the materials index
-	private final String MATERIALS_INDEX_NAME = "materials-fulltext";
+	private final String INDEX_NAME = "materials-fulltext";
 	
 	private final static Logger logger = LoggerFactory.getLogger(MaterialController.class);
 	
@@ -91,17 +91,17 @@ public class MaterialController extends MatINController {
 		
 		// Generate fulltext search index entries for this material. This will help us find this
 		// node later.
-        graphDBService.addToFulltextIndex(MATERIALS_INDEX_NAME, "name", material.getName(), v);
+        graphDBService.addToFulltextIndex(INDEX_NAME, "name", material.getName(), v);
         
         // Remove punctuation characters from the the description string for the search index.
         String descString = material.getDescription().replaceAll("[^A-Za-z0-9]", " ");
-        graphDBService.addToFulltextIndex(MATERIALS_INDEX_NAME, "description", descString, v);
+        graphDBService.addToFulltextIndex(INDEX_NAME, "description", descString, v);
         
         String allKeywords = Joiner.on(" ").join(material.getKeywords());
-        graphDBService.addToFulltextIndex(MATERIALS_INDEX_NAME, "keywords", allKeywords, v);
+        graphDBService.addToFulltextIndex(INDEX_NAME, "keywords", allKeywords, v);
         
         String allElements = Joiner.on(" ").join(material.getComponentElements());
-        graphDBService.addToFulltextIndex(MATERIALS_INDEX_NAME, "componentElements", allElements, v);		
+        graphDBService.addToFulltextIndex(INDEX_NAME, "componentElements", allElements, v);		
 	
 	}
 
@@ -159,7 +159,7 @@ public class MaterialController extends MatINController {
 			MaterialDB materialDB = graphDBService.modify(id, material, MaterialDB.class);
 			
 			// Now remove this vertex from the database indices and re-add so we update the indices
-			graphDBService.removeFromFulltextIndex(MATERIALS_INDEX_NAME, materialDB.asVertex());
+			graphDBService.removeFromFulltextIndex(INDEX_NAME, materialDB.asVertex());
 			addMaterialToIndex(materialDB);
 		
 			graphDBService.getFramedGraph().commit();
@@ -201,7 +201,7 @@ public class MaterialController extends MatINController {
 		try {
 			
 			// Search for the materials using the query string		
-			List<Vertex> vs = graphDBService.queryFulltextIndex(MATERIALS_INDEX_NAME, queryString);
+			List<Vertex> vs = graphDBService.queryFulltextIndex(INDEX_NAME, queryString);
 			
 			for(Vertex v : vs)
 				urls.add(makeUrl() + "/" + (String)v.getProperty("url"));

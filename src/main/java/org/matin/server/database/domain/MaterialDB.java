@@ -45,6 +45,8 @@ public interface MaterialDB extends MatINDBObject {
 	@Property("componentElementLowerBounds")
 	public List<Double> getComponentElementLowerBounds();
 	
+	
+	
 	/*
 	@Adjacency(label="isA", direction=Direction.OUT)
 	public void setMaterialFamily(MaterialCategory mf);

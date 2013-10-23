@@ -23,7 +23,6 @@ import org.springframework.web.client.RestTemplate;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 
-
 @JsonSerialize(include=JsonSerialize.Inclusion.NON_NULL)
 @JsonFilter("myFilter")
 public class MatINWriteableObject {
@@ -36,7 +35,7 @@ public class MatINWriteableObject {
 	
 	protected static RestTemplate restTemplate = new RestTemplate();
 	
-	private final static Logger logger = LoggerFactory.getLogger(MatINWriteableObject.class);
+	protected final static Logger logger = LoggerFactory.getLogger(MatINWriteableObject.class);
 
 	/**
 	 * When was this object created on the server side.

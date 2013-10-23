@@ -1,6 +1,5 @@
 package org.matin.server.database.domain;
 
-import java.util.Date;
 import java.util.List;
 
 import com.tinkerpop.blueprints.Direction;
@@ -8,7 +7,7 @@ import com.tinkerpop.frames.Adjacency;
 import com.tinkerpop.frames.Property;
 import com.tinkerpop.frames.VertexFrame;
 
-public interface DataObjectDB extends VertexFrame{
+public interface DataObjectDB extends MatINDBObject, AccessControlDB {
 	
 	@Property("name")
 	public void setName(String name);
@@ -19,48 +18,56 @@ public interface DataObjectDB extends VertexFrame{
 	public void setDescription(String description);
 	@Property("description")
 	public String getDescription();
+
+	@Property("keywords")
+	public void setKeywords(List<String> keywords);
+	@Property("keywords")
+	public List<String> getKeywords();
 	
+	@Property("fileURLs")
+	public void setFileURLs(List<String> urls);
+	@Property("fileURLs")
+	public List<String> getFileURLs();
 	
 	/*
-	 * Groups, and permissions
+	 * Does this data object come from experimental data or is it simulated.
 	 */
-	@Property("groups")
-	public void setGroups(List<String> groups);
-	@Property("groups")
-	public List<String> getGroups();
-	
-	@Property("groupWritePermissions")
-	public void getGroupWritePermissions();
-	@Property("groupWritePermissions")
-	public boolean setGroupWritePermissions(boolean val);
-	
-	
-	@Property("dataFileURL")
-	public void setProfileImgURL(String url);
-	@Property("dataFileURL")
-	public String getProfileImgURL();
-	
 	@Property("isSimulated")
-	public void setIsSimulated(boolean b);
+	public void setIsSimulated(Boolean b);
 	@Property("isSimulated")
-	public boolean getIsSimulated();
+	public Boolean getIsSimulated();
 	
-	@Adjacency(label="contains", direction = Direction.OUT)
-	public void setCanonicalFeature(CanonicalFeatureDB cf);
+	/*
+	 * Datasets can be made of materials, just like samples
+	 */
+	@Adjacency(label="madeOf", direction = Direction.OUT)
+	public void setMadeOf(MaterialDB material);
+	@Adjacency(label="madeOf", direction = Direction.OUT)
+	public MaterialDB getMadeOf();
 	
-	@Adjacency(label="spans", direction = Direction.OUT)
-	public void setSpace(SpaceDB s);
-	
-	@Adjacency(label="argumentInto", direction = Direction.OUT)
-	public void setDataProcessRunIn(DataProcessRunDB dpr);
-	@Adjacency(label="argumentInto", direction = Direction.OUT)
-	public Iterable<DataProcessRunDB> getDataProcessRuns();
-	
+	/*
+	 * Datasets can be related to a particular physical sample.
+	 */
 	@Adjacency(label="hasA", direction = Direction.IN)
-	public SampleDB getSample();
+	public void setSample();
 	
-	@Adjacency(label="argumentOut", direction = Direction.IN)
+	/*
+	 * Describe the connection between this data object and data process runs.
+	 */
+	@Adjacency(label="argument", direction = Direction.OUT)
+	public void setDataProcessRunIn(DataProcessRunDB dpr);
+	@Adjacency(label="argument", direction = Direction.OUT)
+	public Iterable<DataProcessRunDB> getDataProcessRuns();
+		
+	@Adjacency(label="produced", direction = Direction.IN)
 	public Iterable<DataProcessRunDB> getDataProcessRun();
-	
 
+	/*
+	 * Directory on the server where the data objects files reside
+	 */
+	@Property("dataDir")
+	public void setDataDir(String name);
+	@Property("dataDir")
+	public String getDataDir();
+	
 }

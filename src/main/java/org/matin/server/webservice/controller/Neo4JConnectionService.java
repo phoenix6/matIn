@@ -2,6 +2,7 @@ package org.matin.server.webservice.controller;
 
 import javax.annotation.PreDestroy;
 
+import java.io.File;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -52,12 +53,26 @@ public class Neo4JConnectionService implements GraphDBConnectionService {
 		
 	private final static Logger logger = LoggerFactory.getLogger(GraphDBConnectionService.class);
 	
-	//private final String DB_PATH = "remote:localhost/mathub";
-	private final static String DB_PATH = "C:\\mathub_db";
+	protected final static String DB_PATH = "C:\\mathub_db";
 	
 	protected static Neo4jGraph graph;
 	
 	protected static FramedTransactionalGraph<TransactionalGraph> manager;
+	
+	protected static WrappingNeoServerBootstrapper bootstrapper; 
+	
+	private static boolean deleteDir(File dir) {
+	    if (dir.isDirectory()) {
+	        String[] children = dir.list();
+	        for (int i=0; i<children.length; i++) {
+	            boolean success = deleteDir(new File(dir, children[i]));
+	            if (!success) {
+	                return false;
+	            }
+	        }
+	    }
+	    return dir.delete();
+	}
 	
 	public Neo4JConnectionService() { }
 	
@@ -78,12 +93,15 @@ public class Neo4JConnectionService implements GraphDBConnectionService {
 			}
 		};
 		
+		// XXX Delete the database if it exists, just do this for now while testing XXX
+		deleteDir(new File(DB_PATH));
+		
 		// Check if the database exists already, if it doesn't then lets create it.
 		graph = new Neo4jGraph(DB_PATH);
 		
 		// Start the neo4j web admin console. This will allow us to see the graph from web browser.
 		GraphDatabaseService tmp = ((Neo4jGraph)graph).getRawGraph();
-		WrappingNeoServerBootstrapper bootstrapper = new WrappingNeoServerBootstrapper((GraphDatabaseAPI) tmp);
+		bootstrapper = new WrappingNeoServerBootstrapper((GraphDatabaseAPI) tmp);
 		bootstrapper.start();
 		
 		FramedGraphFactory f = new FramedGraphFactory(new AbstractModule() {
@@ -94,6 +112,11 @@ public class Neo4JConnectionService implements GraphDBConnectionService {
 		
 		manager = f.create((TransactionalGraph)graph);	
  
+    }
+    
+    public String getDBDirectory()
+    {
+    	return DB_PATH;
     }
     
     public TransactionalGraph getGraph()
@@ -205,6 +228,14 @@ public class Neo4JConnectionService implements GraphDBConnectionService {
 			graph = null;
 			manager = null;
 		}
+		
+		// Shutdown neo embedded server it is running
+		if(bootstrapper != null)
+		{
+			bootstrapper.stop();
+			bootstrapper = null;
+		}
+		
 	}
 
 	@PreDestroy
